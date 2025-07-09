@@ -1,18 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { PrismaService } from './database/prisma.service';
-import { PersonRepository } from './repositories/person-repository';
-import { PrismaPersonRepository } from './repositories/prisma/prisma-person-repository';
+import { DiscordModule } from './modules/discord/discord.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [
-    PrismaService,
-    {
-      provide: PersonRepository,
-      useClass: PrismaPersonRepository,
-    },
-  ],
+  imports: [DiscordModule],
 })
 export class AppModule {}
