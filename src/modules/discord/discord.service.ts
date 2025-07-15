@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Client, GatewayIntentBits } from 'discord.js';
-import { ClientWithCommands } from './discord-client-with-commands';
-import { getCommands } from './get-commands';
-import { registerCommands } from './deploy-commands';
+import { ClientWithCommands } from './types/client-with-commands';
+import { getCommands } from './utils/get-commands';
+import { registerCommands } from './utils/deploy-commands';
 
 @Injectable()
 export class DiscordService {
@@ -21,7 +21,7 @@ export class DiscordService {
     await registerCommands();
   }
 
-  getClient(): Client {
+  getClient(): ClientWithCommands {
     return this.client;
   }
 }

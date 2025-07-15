@@ -14,7 +14,7 @@ export type Command = {
 export async function getCommands(
   directory: string,
 ): Promise<Collection<string, Command>> {
-  const rootDir = path.join(__dirname, directory);
+  const rootDir = path.join(__dirname, '..', directory);
   const collection = new Collection<string, Command>();
 
   const filenames = await readdir(rootDir);
@@ -25,7 +25,6 @@ export async function getCommands(
     const filePath = path.join(rootDir, filename);
     const module = (await import(filePath)) as { default: Command };
     const command = module.default;
-    console.log(command);
 
     if (!command || !command.data || !command.execute) continue;
 
