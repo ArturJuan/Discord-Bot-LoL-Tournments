@@ -1,24 +1,27 @@
 import { Injectable } from '@nestjs/common';
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { ClientWithCommands } from './types/client-with-commands';
-import { getCommands } from './utils/get-commands';
-import { registerCommands } from './utils/deploy-commands';
-
+import { CommandManager } from './command-manager.service';
 @Injectable()
 export class DiscordService {
   private client: ClientWithCommands;
 
-  constructor() {
+  constructor(private readonly commandManager: CommandManager) {
     this.client = new Client({
       intents: [GatewayIntentBits.Guilds],
     }) as ClientWithCommands;
+
+    this.client.commands = new Collection();
+
     void this.login();
   }
 
   async login() {
     await this.client.login(process.env.DISCORD_TOKEN);
-    this.client.commands = await getCommands('commands');
-    await registerCommands();
+    const allCommands = this.commandManager.getAllCommands();
+    allCommands.forEach((cmd, name) => {
+      this.client.commands.set(name, cmd);
+    });
   }
 
   getClient(): ClientWithCommands {
