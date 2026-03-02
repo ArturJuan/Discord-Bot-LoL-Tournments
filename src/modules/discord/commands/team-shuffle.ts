@@ -27,7 +27,7 @@ export class TeamShuffleCommand implements SlashCommandBuilderExecute {
 
   async execute(interaction: ChatInputCommandInteraction): Promise<void> {
     const numberOfTeams = interaction.options.getInteger('teams');
-    const allowOddTeam = interaction.options.getBoolean('allowodd');
+    // const allowOddTeam = interaction.options.getBoolean('allowodd');
 
     await interaction.reply(
       `This is the number of teams you have choosen: ${numberOfTeams}`,

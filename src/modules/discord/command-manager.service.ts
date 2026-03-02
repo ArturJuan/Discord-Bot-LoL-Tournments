@@ -26,4 +26,8 @@ export class CommandManager implements OnModuleInit {
   public getAllCommands() {
     return this.commands;
   }
+
+  public getCommand(name: string) {
+    return this.commands.get(name);
+  }
 }

@@ -1,11 +1,14 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscordService } from './discord.service';
 import { Events, Interaction, MessageFlags } from 'discord.js';
-import { SlashCommandBuilderExecute } from './types/command-builder-execute';
+import { CommandManager } from './command-manager.service';
 
 @Injectable()
 export class DiscordGateway implements OnModuleInit {
-  constructor(private readonly discordService: DiscordService) {}
+  constructor(
+    private readonly discordService: DiscordService,
+    private readonly commandManager: CommandManager,
+  ) {}
 
   onModuleInit() {
     const client = this.discordService.getClient();
@@ -17,9 +20,7 @@ export class DiscordGateway implements OnModuleInit {
     const handleInteractionCreate = async (interaction: Interaction) => {
       if (!interaction.isChatInputCommand()) return;
 
-      const command = client.commands.get(
-        interaction.commandName,
-      ) as SlashCommandBuilderExecute;
+      const command = this.commandManager.getCommand(interaction.commandName);
 
       if (!command) {
         console.error(
