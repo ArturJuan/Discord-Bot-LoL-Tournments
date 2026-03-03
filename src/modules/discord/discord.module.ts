@@ -4,9 +4,10 @@ import { DiscordService } from './discord.service';
 import { CommandManager } from './command-manager.service';
 import { PingCommand } from './commands/ping';
 import { TeamShuffleCommand } from './commands/team-shuffle';
+import { DiscoveryModule } from '@nestjs/core';
 
 @Module({
-  imports: [],
+  imports: [DiscoveryModule],
   providers: [
     DiscordGateway,
     DiscordService,

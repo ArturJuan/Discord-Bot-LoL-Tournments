@@ -1,6 +1,9 @@
 import { SlashCommandBuilder, CommandInteraction } from 'discord.js';
 import { Injectable } from '@nestjs/common';
 import { SlashCommandBuilderExecute } from '../types/command-builder-execute';
+import { SlashCommand } from '../decorators/slash-command.decorator';
+
+@SlashCommand()
 @Injectable()
 export class PingCommand implements SlashCommandBuilderExecute {
   getCommand() {
